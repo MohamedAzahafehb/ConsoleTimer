@@ -100,6 +100,7 @@ void trigger(String methode)
     Console.WriteLine(methode);
     Console.WriteLine("1. stop alarm");
     Console.WriteLine("2. sluimer");
+    //test
     int keuze = Int32.Parse(Console.ReadLine());
     switch (keuze)
     {
