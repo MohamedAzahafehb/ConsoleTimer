@@ -6,13 +6,14 @@ int keuze = 0;
 System.Timers.Timer timer = null;
 TimeSpan sluimerTijd = TimeSpan.FromMinutes(5);
 Wekmethode wekMethode = delegate { };
-AlarmActie alarmActie = delegate { };
 
 do
 {
     Console.WriteLine("1. tijd kan instellen waarop je wekker \"afloopt\"");
     Console.WriteLine("2. sluimertijd kan instellen nadat je wekker is afgelopen!");
     Console.WriteLine("3. kies manier van wekken");
+    Console.WriteLine("4. sluimer");
+    Console.WriteLine("5. stop alarm");
     Console.WriteLine("0. Sluit Af");
 
     keuze = Int32.Parse(Console.ReadLine());
@@ -26,7 +27,9 @@ do
             break;
         case 2:
             Console.WriteLine("stel de sluimertijd in: ");
-            sluimerTijd = TimeSpan.Parse(Console.ReadLine());
+            int aantalMin = Int32.Parse(Console.ReadLine());
+            sluimerTijd = TimeSpan.FromSeconds(aantalMin);
+            Console.WriteLine("sluimertijd is nu: " + sluimerTijd + " sec");
             break;
         case 3:
             Console.WriteLine("A. geluid");
@@ -52,6 +55,12 @@ do
                     break;
             }
             break;
+        case 4:
+            sluimer();
+            break;
+        case 5:
+            stopAlarm();
+            break;
         case 0:
             stopAlarm();
             break;
@@ -59,8 +68,8 @@ do
             Console.WriteLine("geen correcte invoer!");
             break;
     }
-}
-while (keuze != 0);
+} while (keuze != 0);
+
 
 void stelTijdIn(DateTime alarmTijd) //timer actieveren van: https://learn.microsoft.com/en-us/dotnet/api/system.timers.timer?view=net-9.0
 {
@@ -79,8 +88,10 @@ void stopAlarm()
 }
 void sluimer()
 {
+    // hier een if-statement om te checken of timer niet null is maar de opdracht was om enkel in het menu zo'n statement te gebruiken
+    timer.AutoReset = false;
+    Console.WriteLine("Sluimer van " + sluimerTijd + " gaat nu in...");
     stelTijdIn(DateTime.Now.Add(sluimerTijd));
-    Console.WriteLine("Sluimeren voor: " + (sluimerTijd));
 }
 void maakGeluid()
 {
@@ -98,24 +109,7 @@ void knipperLicht()
 void trigger(String methode)
 {
     Console.WriteLine(methode);
-    Console.WriteLine("1. stop alarm");
-    Console.WriteLine("2. sluimer");
-    //test
-    int keuze = Int32.Parse(Console.ReadLine());
-    switch (keuze)
-    {
-        case 1:
-            stopAlarm();
-            break;
-        case 2:
-            sluimer();
-            break;
-        default:
-            Console.WriteLine("Onjuiste keuze");
-            break;
-    }
-
+    timer.Interval = 2500;
 }
 
 delegate void Wekmethode();
-delegate void AlarmActie();
