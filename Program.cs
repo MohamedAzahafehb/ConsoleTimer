@@ -101,7 +101,6 @@ void trigger(String methode)
     Console.WriteLine("1. stop alarm");
     Console.WriteLine("2. sluimer");
     int keuze = Int32.Parse(Console.ReadLine());
-    timer.Interval = 3000; //elke seconde
     switch (keuze)
     {
         case 1:
